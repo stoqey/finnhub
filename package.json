@@ -60,9 +60,6 @@
   "peerDependencies": {
     "typescript": ">=2.0"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "dependencies": {
     "axios": "^0.19.2"
   }
