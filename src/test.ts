@@ -20,7 +20,7 @@ const endDate = new Date();
 describe('Given FinnhubIO', () => {
     it('should get candles in the passed 4 days for ' + symbol, async () => {
         const candles = await finnhubAPI.getCandles(symbol, startDate, endDate, '1');
-        console.log('candles', candles && candles[0]);
+        console.log('candles', candles && candles[candles.length - 1]);
         console.log('candles length', candles && candles.length);
         expect(candles).not.to.be.empty;
     })
