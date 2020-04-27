@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
+import csv from 'csvtojson';
 import moment from 'moment';
-import { MarketDataItem, Candles, Resolution } from './interface';
+import { TickData } from './interface';
 import FinnhubAPI from '.';
-
 
 interface GetTickData {
     date: Date;
@@ -10,7 +10,7 @@ interface GetTickData {
     context: FinnhubAPI;
 };
 
-export const getTickData = async (args: GetTickData) => {
+export const getTickData = async (args: GetTickData): Promise<TickData[]> => {
     const { date: day = new Date(), symbol = "AAPL", context } = args;
 
     const token = context.token;
@@ -30,9 +30,19 @@ export const getTickData = async (args: GetTickData) => {
             params
         });
 
-        const data: Candles = ticks.data;
+        const data: string = ticks.data;
 
-        console.log('data', typeof data);
+        const jsonData = await csv().fromString(data);
+
+        const formatedData: TickData[] = jsonData.map(jsD => {
+            return {
+                date: new Date(+jsD.timestamp),
+                price: Math.abs(jsD.price),
+                volume: Math.abs(jsD.volume),
+            }
+        });
+
+        return formatedData;
 
     }
     catch (error) {

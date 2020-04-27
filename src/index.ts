@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { MarketDataItem, Candles, Resolution } from './interface';
+import { MarketDataItem, Candles, Resolution, TickData } from './interface';
 import { getTickData } from './tick';
 export * from './interface';
 
@@ -83,7 +83,7 @@ class FinnhubAPI {
     /**
      * getTick
      */
-    public getTick(symbol: string, date: Date) {
+    public getTick(symbol: string, date: Date): Promise<TickData[]> {
         return getTickData({ symbol, date, context: this });
     }
 }
