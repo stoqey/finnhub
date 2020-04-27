@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { MarketDataItem, Candles, Resolution } from './interface';
+import { getTickData } from './tick';
 export * from './interface';
 
 const round = (num: number) => Math.round(num);
@@ -77,6 +78,13 @@ class FinnhubAPI {
             console.log('error getting candles', error && error.message);
             return [];
         }
+    }
+
+    /**
+     * getTick
+     */
+    public getTick(symbol: string, date: Date) {
+        return getTickData({ symbol, date, context: this });
     }
 }
 
