@@ -1,7 +1,7 @@
 {
   "name": "@stoqey/finnhub",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NodeJS Finhubb wrapper",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

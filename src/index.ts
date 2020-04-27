@@ -64,7 +64,7 @@ class FinnhubAPI {
                 const low = data.l[index];
                 return {
                     close,
-                    time: new Date(+time * 1000),
+                    date: new Date(+time * 1000),
                     volume,
                     open,
                     high,

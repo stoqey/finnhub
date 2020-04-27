@@ -8,7 +8,7 @@ export interface TickData {
 
 export interface MarketDataItem {
   close: number;
-  time: Date;
+  date: Date;
   high: number;
   low: number;
   open: number;
