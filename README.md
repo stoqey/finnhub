@@ -1,9 +1,10 @@
 # Finnhub - NodeJS Wrapper
 
-### Features
+#### Features
 
-- GET CANDLES
-- GET TICK
+- Candles
+- Tick
+- Real-time price updates
 
 ### Install
 ```
@@ -12,9 +13,13 @@ npm i @stoqey/finnhub
 
 ### Initialize
 ```ts
-import FinnhubAPI from '@stokey/finnhub';
+import FinnhubAPI, { FinnhubWS } from '@stokey/finnhub';
 
+// For API
 const finnhubAPI = new FinnhubAPI(finnHubKey);
+
+// For Websockets
+const finnhubWs = FinnhubWS.Instance;
 ```
 
 ### Get Candles
@@ -25,4 +30,22 @@ const candles = await finnhubAPI.getCandles(symbol, startDate, endDate, '1');
 ### Get Ticks
 ```ts
 const ticks = await finnhubAPI.getTick(symbol, date);
+```
+
+### Real-time price updates
+```ts
+finnhubWs.when("onReady", async () => {
+        console.log('WS is ready');
+});
+
+finnhubWs.when("onData", async (data: TickData) => {
+        console.log('WS onData', data);
+});
+
+// Add symbol to streaming list
+finnhubWs.addSymbol("AAPL");
+
+// Stop streaming symbol
+finnhubWs.removeSymbol("AAPL");
+
 ```
