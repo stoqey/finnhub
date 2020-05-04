@@ -77,23 +77,22 @@ export class FinnhubWS {
     private init() {
         let self = this;
 
-
         // Emulate for test
-        if (process.env.NODE_ENV === 'test') {
-            setTimeout(async () => {
+        // if (process.env.NODE_ENV === 'test') {
+        //     setTimeout(async () => {
 
-                // Emit ready
-                const onReady = self.events["onReady"];
+        //         // Emit ready
+        //         const onReady = self.events["onReady"];
 
 
-                if (onReady) {
-                    await onReady();
-                }
+        //         if (onReady) {
+        //             await onReady();
+        //         }
 
-            }, 3000);
+        //     }, 3000);
 
-            return;
-        }
+        //     return;
+        // }
 
         console.log('FinnhubIO.init startup', (FINNHUB_KEY || '').slice(0, 5));
 

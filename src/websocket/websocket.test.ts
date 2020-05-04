@@ -22,12 +22,17 @@ describe('FinnhubWS', () => {
 
     it('should get onData', (done) => {
 
+        let completed = false;
         finnhubWs.when("onData", async (data: TickData) => {
             console.log('WS onData', data);
-            done();
+            if (!completed) {
+                done();
+            }
+            completed = true;
+
         });
 
-        finnhubWs.addSymbol("TEST");
+        finnhubWs.addSymbol("AAPL");
 
     })
 })

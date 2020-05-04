@@ -12,6 +12,8 @@ npm i @stoqey/finnhub
 ```
 
 ### Initialize
+Set env variable `FINNHUB_KEY` with the token you get from Finnhub.
+
 ```ts
 import FinnhubAPI, { FinnhubWS } from '@stoqey/finnhub';
 
