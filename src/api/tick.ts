@@ -1,7 +1,6 @@
-import axios, { AxiosInstance } from 'axios';
 import csv from 'csvtojson';
 import moment from 'moment';
-import { TickData } from './interface';
+import { TickData } from '../interface';
 import FinnhubAPI from '.';
 
 interface GetTickData {
