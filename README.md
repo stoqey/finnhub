@@ -13,7 +13,7 @@ npm i @stoqey/finnhub
 
 ### Initialize
 ```ts
-import FinnhubAPI, { FinnhubWS } from '@stokey/finnhub';
+import FinnhubAPI, { FinnhubWS } from '@stoqey/finnhub';
 
 // For API
 const finnhubAPI = new FinnhubAPI(finnHubKey);
