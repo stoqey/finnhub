@@ -1,6 +1,7 @@
 export type Resolution = "1" | "5" | "15" | "30" | "60" | "D" | "W" | "M";
 
 export interface TickData {
+  symbol?: string;
   date: Date;
   price: number;
   volume: number;
