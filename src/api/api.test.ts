@@ -17,7 +17,7 @@ const startDATE = new Date();
 const startDate = new Date(startDATE.setDate(startDATE.getDate() - 4));
 const endDate = new Date();
 
-describe('Given FinnhubIO', () => {
+describe('FinnhubAPI', () => {
 
     it('should get candles in the passed 4 days for ' + symbol, async () => {
         const candles = await finnhubAPI.getCandles(symbol, startDate, endDate, '1');

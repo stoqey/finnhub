@@ -17,6 +17,11 @@ interface PublisherEvents {
     error: (error: Error) => Promise<any>;
 }
 
+/**
+ * @Websocket
+ * Stream real-time trades for US stocks, forex and crypto.
+ * @see https://finnhub.io/docs/api#websocket-price
+ */
 export class FinnhubWS {
     private static _instance: FinnhubWS;
 
@@ -154,7 +159,7 @@ export class FinnhubWS {
     /**
      * Add symbol
      * @param symbol: string
-     * @returns Boolean
+     * @returns boolean
      */
     public addSymbol(symbol: string): boolean {
         console.log('addSymbol', symbol);
