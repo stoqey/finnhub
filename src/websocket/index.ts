@@ -28,24 +28,24 @@ export class FinnhubWS {
         return this._instance || (this._instance = new this());
     }
 
-    public events: PublisherEvents = {} as any;
+    events: PublisherEvents = {} as any;
 
     /**
      * @template
      * when/on
      */
-    public when(event: keyof PublisherEvents, func: () => Promise<any>) {
+    public when(event: keyof PublisherEvents, func: (data?: any) => Promise<any>): void {
         this.events[event] = func;
     }
 
     private constructor() {
-        this.config();
+        this.config()
     }
 
     /**
      * config
      */
-    private config() {
+    public config() {
         let self = this;
 
         if (TZ_ON) {
@@ -72,37 +72,23 @@ export class FinnhubWS {
     private init() {
         let self = this;
 
+
         // Emulate for test
         if (process.env.NODE_ENV === 'test') {
-            return setTimeout(() => {
+            setTimeout(async () => {
+
                 // Emit ready
                 const onReady = self.events["onReady"];
+
+
                 if (onReady) {
-                    onReady();
+                    await onReady();
                 }
 
-                return setTimeout(() => {
-                    const onData = self.events["onData"];
-                    if (onData) {
+            }, 3000);
 
-                        const dataToSend: TickData = {
-                            price: 1000,
-                            date: new Date(),
-                            symbol: "STQ",
-                            volume: 0
-                        };
-
-                        onData(dataToSend);
-                    }
-                }, 3000);
-
-            }, 2000);
+            return;
         }
-
-        // if (self.socket) {
-        //     // already been initialized
-        //     return false;
-        // }
 
         console.log('FinnhubIO.init startup', (FINNHUB_KEY || '').slice(0, 5));
 
@@ -172,6 +158,24 @@ export class FinnhubWS {
      */
     public addSymbol(symbol: string): boolean {
         console.log('addSymbol', symbol);
+
+        const onData = this.events["onData"];
+
+        // If test
+        if (symbol === "TEST") {
+            setTimeout(() => {
+                if (onData) {
+                    const dataToSend: TickData = {
+                        price: 1000,
+                        date: new Date(),
+                        symbol: "STQ",
+                        volume: 0
+                    };
+                    onData(dataToSend);
+                }
+            }, 2000);
+            return true;
+        }
 
         if (!this.socket) {
             return false;
