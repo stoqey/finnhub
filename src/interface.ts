@@ -26,3 +26,20 @@ export interface Candles {
   v: number[];
 }
 
+export interface QuoteResponse {
+  c: number;
+  h: number;
+  l: number;
+  o: number;
+  pc: number;
+  t: number;
+}
+
+export interface Quote {
+  close: number; // Current price
+  high: number; // Low price of the day
+  low: number; // High price of the day
+  open: number; // Open price of the day
+  prevClose: number; // Previous close price
+  date: Date; // time
+}

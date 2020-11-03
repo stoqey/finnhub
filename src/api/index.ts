@@ -12,6 +12,9 @@ const round = (num: number) => Math.round(num);
  *
  * @TickData Get historical tick data for US stocks from all 13 exchanges
  * https://finnhub.io/docs/api#stock-tick
+ * 
+ * @Quote Get stocks quote price
+ * https://finnhub.io/docs/api#quote
  */
 export class FinnhubAPI {
   public token: string;
