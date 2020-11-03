@@ -59,6 +59,7 @@
     "rimraf": "^2.5.4",
     "ts-node": "^8.4.1",
     "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
     "typescript": "^3.2.4"
   },
