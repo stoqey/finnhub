@@ -4,6 +4,7 @@
 
 - Candles
 - Tick
+- Quote
 - Real-time price updates
 
 ### Install
