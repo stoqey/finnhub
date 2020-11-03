@@ -1,6 +1,12 @@
 import axios, { AxiosInstance } from "axios";
-import {isEmpty} from 'lodash'
-import { Candles, MarketDataItem, Quote, Resolution, TickData } from "../interface";
+import { isEmpty } from "lodash";
+import {
+  Candles,
+  MarketDataItem,
+  Quote,
+  Resolution,
+  TickData,
+} from "../interface";
 import { getQuoteData } from "./quote";
 import { getTickData } from "./tick";
 
@@ -13,7 +19,7 @@ const round = (num: number) => Math.round(num);
  *
  * @TickData Get historical tick data for US stocks from all 13 exchanges
  * https://finnhub.io/docs/api#stock-tick
- * 
+ *
  * @Quote Get stocks quote price
  * https://finnhub.io/docs/api#quote
  */
@@ -105,7 +111,7 @@ export class FinnhubAPI {
    * @param date
    */
   public async getTick(symbol: string, date: Date): Promise<TickData[]> {
-    return await getTickData({ symbol, date, context: this });
+    return getTickData({ symbol, date, context: this });
   }
 
   /**
@@ -114,7 +120,7 @@ export class FinnhubAPI {
    * @param symbol
    */
   public async getQuote(symbol: string): Promise<Quote> {
-      return await getQuoteData({ symbol, context: this });
+    return getQuoteData({ symbol, context: this });
   }
 }
 
