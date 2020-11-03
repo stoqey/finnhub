@@ -1,9 +1,9 @@
+import { TickData } from "src/interface";
 import WebSocket from "ws";
+import { FINNHUB_KEY, TZ_ON } from "../config";
 import { checkIfMarketIsOpen } from "../utils/checkIfMarketIsOpen";
 import { log } from "../utils/log";
-import { isDev, FINNHUB_KEY, TZ_ON } from "../config";
 import JSONDATA from "../utils/text.utils";
-import { TickData } from "src/interface";
 
 interface PublisherEvents {
   /**
@@ -40,7 +40,7 @@ export class FinnhubWS {
    */
   public when(
     event: keyof PublisherEvents,
-    func: (data?: any) => Promise<any>
+    func: (data?: any) => Promise<any>,
   ): void {
     this.events[event] = func;
   }
@@ -53,7 +53,7 @@ export class FinnhubWS {
    * config
    */
   public config() {
-    let self = this;
+    const self = this;
 
     if (TZ_ON) {
       if (checkIfMarketIsOpen()) {
@@ -75,7 +75,7 @@ export class FinnhubWS {
    * init
    */
   private init() {
-    let self = this;
+    const self = this;
 
     // Emulate for test
     // if (process.env.NODE_ENV === 'test') {
@@ -122,7 +122,7 @@ export class FinnhubWS {
     }
 
     this.socket.on("message", async function (
-      data: OnSocketData
+      data: OnSocketData,
     ): Promise<void> {
       // @ts-ignore
       const parsedData: OnSocketData = JSONDATA(data);
@@ -161,7 +161,7 @@ export class FinnhubWS {
    * @returns boolean
    */
   public addSymbol(symbol: string): boolean {
-            console.log("addSymbol", symbol);
+    console.log("addSymbol", symbol);
 
     const onData = this.events.onData;
 
