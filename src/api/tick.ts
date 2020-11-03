@@ -30,6 +30,7 @@ export const getTickData = async (args: GetTickData): Promise<TickData[]> => {
 
     const data: string = ticks.data;
 
+    // tslint:disable-next-line
     const jsonData = await csv().fromString(data);
 
     const formatedData: TickData[] = jsonData.map((jsD) => {

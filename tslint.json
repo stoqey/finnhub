@@ -39,7 +39,7 @@
     "member-ordering": false,
     "strict-type-predicates": true,
     "strict-boolean-expressions": [
-      true,
+      false,
       "allow-null-union",
       "allow-undefined-union",
       "ignore-rhs"

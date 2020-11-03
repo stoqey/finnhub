@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import {isEmpty} from 'lodash'
 import { Candles, MarketDataItem, Resolution, TickData } from "../interface";
 import { getTickData } from "./tick";
 
@@ -65,7 +66,9 @@ export class FinnhubAPI {
 
       const data: Candles = candles.data;
 
-      const marketData = !((data && data.c) || []).length
+      const closes = data.c;
+
+      const marketData = isEmpty(closes)
         ? []
         : data.c.map((cc, index) => {
             const close = cc; // a.k.
@@ -97,7 +100,7 @@ export class FinnhubAPI {
    * @param symbol
    * @param date
    */
-  public getTick(symbol: string, date: Date): Promise<TickData[]> {
+  public async getTick(symbol: string, date: Date): Promise<TickData[]> {
     return getTickData({ symbol, date, context: this });
   }
 }

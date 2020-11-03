@@ -1,4 +1,5 @@
-import { TickData } from "src/interface";
+/* tslint:disable */
+import { TickData } from "../interface";
 import WebSocket from "ws";
 import { FINNHUB_KEY, TZ_ON } from "../config";
 import { checkIfMarketIsOpen } from "../utils/checkIfMarketIsOpen";
