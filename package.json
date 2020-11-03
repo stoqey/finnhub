@@ -19,8 +19,7 @@
     "test-spec": "mocha src/**/*test.ts -R spec --require ts-node/register --exit --timeout 30000",
     "test-api": "mocha src/api/*test.ts --config mocharc.json",
     "test": "npm run test-spec",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run build && npm test"
+    "prepublishOnly": "npm run build"
   },
   "husky": {
     "hooks": {
