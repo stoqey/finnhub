@@ -161,7 +161,7 @@ export class FinnhubWS {
    * @returns boolean
    */
   public addSymbol(symbol: string): boolean {
-    console.log("addSymbol", symbol);
+            console.log("addSymbol", symbol);
 
     const onData = this.events.onData;
 

@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "lint": "tslint \"src/**/*.ts\" --project tsconfig.json",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "build": "rimraf dist && tsc",
     "test-ws": "mocha src/websocket/*test.ts -R spec --require ts-node/register --exit --timeout 30000",
     "test-spec": "mocha src/**/*test.ts -R spec --require ts-node/register --exit --timeout 30000",
@@ -56,6 +57,7 @@
     "chai": "^4.0.1",
     "dotenv": "^8.2.0",
     "mocha": "^8.2.1",
+    "prettier": "2.1.2",
     "rimraf": "^2.5.4",
     "ts-node": "^8.4.1",
     "tslint": "^5.11.0",
