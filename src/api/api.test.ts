@@ -30,24 +30,29 @@ describe("FinnhubAPI", () => {
     expect(candles).not.to.be.empty;
   });
 
-  it("should timeout after 4 secs" + symbol, async () => {
-    const startDate = new Date("2020-03-28T04:00:00.000Z");
-    const endDate = new Date("2020-03-30T04:00:00.000Z");
-    const candles = await finnhubAPI.getCandles(
-      symbol,
-      startDate,
-      endDate,
-      "1",
-    );
-    console.log("candles", candles);
-    console.log("candles length", candles && candles.length);
-    expect(candles).not.to.be.empty;
-  });
+  // it("should timeout after 4 secs" + symbol, async () => {
+  //   const startDate = new Date("2020-03-28T04:00:00.000Z");
+  //   const endDate = new Date("2020-03-30T04:00:00.000Z");
+  //   const candles = await finnhubAPI.getCandles(
+  //     symbol,
+  //     startDate,
+  //     endDate,
+  //     "1",
+  //   );
+  //   console.log("candles", candles);
+  //   console.log("candles length", candles && candles.length);
+  //   expect(candles).not.to.be.empty;
+  // });
 
-  it("should get ticks for a symbol" + symbol, async () => {
+  it("should get ticks for a symbol = " + symbol, async () => {
     const ticks = await finnhubAPI.getTick(symbol, startDate);
     console.log("ticks", ticks && ticks[ticks.length - 1]);
     console.log("ticks length", ticks && ticks.length);
     return expect(ticks.length).not.equals(0);
+  });
+
+  it("should get quote for a symbol = " + symbol, async () => {
+    const quote = await finnhubAPI.getQuote(symbol);
+    return expect(quote.close).not.equals(0);
   });
 });
