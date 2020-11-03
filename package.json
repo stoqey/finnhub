@@ -30,7 +30,7 @@
     "trailingComma": "all"
   },
   "lint-staged": {
-    "**/*.{ts}": [
+    "*.{ts,tsx}": [
       "tslint --project tsconfig.json -c tslint.commit.json --fix",
       "prettier --write src/**/*.ts"
     ]
