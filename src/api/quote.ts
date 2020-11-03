@@ -13,7 +13,7 @@ interface GetQuote {
  * https://finnhub.io/docs/api#quote
  * @param args 
  */
-export const getQuoteData = async (args: GetQuote): Promise<Quote | null> => {
+export const getQuoteData = async (args: GetQuote): Promise<Quote> => {
   const { symbol = "AAPL", context } = args;
 
   const token = context.token;
@@ -33,6 +33,7 @@ export const getQuoteData = async (args: GetQuote): Promise<Quote | null> => {
     const { c: close, h: high, l: low, o: open, pc: prevClose, t: time }: QuoteResponse = ticks.data;
 
     return {
+      symbol,
       close,
       high,
       low,
@@ -42,6 +43,14 @@ export const getQuoteData = async (args: GetQuote): Promise<Quote | null> => {
     };
   } catch (error) {
     console.log("error getting quote", error && error.message);
-    return null;
+    return {
+      symbol,
+      close: 0,
+      high: 0,
+      low: 0,
+      open: 0,
+      prevClose: 0,
+      date: new Date(),
+    };
   }
 };

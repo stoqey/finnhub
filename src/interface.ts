@@ -36,6 +36,7 @@ export interface QuoteResponse {
 }
 
 export interface Quote {
+  symbol: string;
   close: number; // Current price
   high: number; // Low price of the day
   low: number; // High price of the day

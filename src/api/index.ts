@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import {isEmpty} from 'lodash'
-import { Candles, MarketDataItem, Resolution, TickData } from "../interface";
+import { Candles, MarketDataItem, Quote, Resolution, TickData } from "../interface";
+import { getQuoteData } from "./quote";
 import { getTickData } from "./tick";
 
 const round = (num: number) => Math.round(num);
@@ -104,7 +105,16 @@ export class FinnhubAPI {
    * @param date
    */
   public async getTick(symbol: string, date: Date): Promise<TickData[]> {
-    return getTickData({ symbol, date, context: this });
+    return await getTickData({ symbol, date, context: this });
+  }
+
+  /**
+   * GetQuote
+   * Get real-time quote data for US stocks. Constant polling is not recommended. Use websocket if you need real-time update.
+   * @param symbol
+   */
+  public async getQuote(symbol: string): Promise<Quote> {
+      return await getQuoteData({ symbol, context: this });
   }
 }
 
