@@ -14,7 +14,7 @@ export interface MarketDataItem {
   low: number;
   open: number;
   volume: number;
-};
+}
 
 export interface Candles {
   c: number[];

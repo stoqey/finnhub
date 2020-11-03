@@ -1,7 +1,5 @@
-import csv from "csvtojson";
-import moment from "moment";
 import FinnhubAPI from ".";
-import { TickData, QuoteResponse, Quote } from "../interface";
+import { Quote, QuoteResponse } from "../interface";
 
 interface GetQuote {
   symbol: string;
@@ -11,7 +9,7 @@ interface GetQuote {
 /**
  * Get quote
  * https://finnhub.io/docs/api#quote
- * @param args 
+ * @param args
  */
 export const getQuoteData = async (args: GetQuote): Promise<Quote> => {
   const { symbol = "AAPL", context } = args;
@@ -30,7 +28,14 @@ export const getQuoteData = async (args: GetQuote): Promise<Quote> => {
       params,
     });
 
-    const { c: close, h: high, l: low, o: open, pc: prevClose, t: time }: QuoteResponse = ticks.data;
+    const {
+      c: close,
+      h: high,
+      l: low,
+      o: open,
+      pc: prevClose,
+      t: time,
+    }: QuoteResponse = ticks.data;
 
     return {
       symbol,

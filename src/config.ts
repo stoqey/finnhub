@@ -1,18 +1,13 @@
-
-
 // Envs
-export const isDev = process.env.NODE_ENV !== 'production';
+require("dotenv").config();
 
-
-if (isDev) {
-    require('dotenv').config();
-}
+export const isDev = process.env.NODE_ENV !== "production";
 
 const { env } = process;
 
 export const forceLog = env.FORCE_LOG || false;
 
-export const FINNHUB_KEY = env.FINNHUB_KEY || '';
+export const FINNHUB_KEY = env.FINNHUB_KEY || "";
 
 /**
  * @tutorial TIMEZONE_ON

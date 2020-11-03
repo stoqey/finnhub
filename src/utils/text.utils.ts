@@ -1,4 +1,4 @@
-import {isEmpty} from "lodash";
+import { isEmpty } from "lodash";
 
 export const JSONDATA = (data: any): Record<string, any> | string | null => {
   if (isEmpty(data) || !data) {
