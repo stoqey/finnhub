@@ -34,7 +34,12 @@ const candles = await finnhubAPI.getCandles(symbol, startDate, endDate, '1');
 const ticks = await finnhubAPI.getTick(symbol, date);
 ```
 
-### Real-time price updates
+### Get Quote
+```ts
+const quote = await finnhubAPI.getQuote(symbol);
+```
+
+### Real-time price updates (W.I.P)
 ```ts
 finnhubWs.when("onReady", async () => {
         console.log('WS is ready');
