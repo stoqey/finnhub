@@ -152,7 +152,7 @@ export class FinnhubWS extends EventEmitter {
     }
 
     try {
-      const isExist = this.symbols.find((x) => x === symbol);
+      const isExist = this.symbols.includes(symbol);
 
       if (isExist) {
         return false;
@@ -176,12 +176,13 @@ export class FinnhubWS extends EventEmitter {
    */
   public removeSymbol(symbol: string): boolean {
     try {
-      const isExist = this.symbols.findIndex((x) => x === symbol);
+      const isExist = this.symbols.includes(symbol);
       if (isExist) {
-        // Remove symbol
         // Request unsubscribe market data for this symbol
         this.symbols = this.symbols.filter((item) => item !== symbol);
         this.socket.send(JSON.stringify({ type: "unsubscribe", symbol }));
+
+        log("new symbols are -------------------------->", this.symbols);
         return true;
       }
       return false;

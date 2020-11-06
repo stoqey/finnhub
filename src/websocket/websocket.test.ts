@@ -31,4 +31,16 @@ describe("FinnhubWS", () => {
 
     finnhubWs.addSymbol("AAPL");
   });
+
+  it("should stop getting data get onData", (done) => {
+    finnhubWs.on("onData", async (data: TickData) => {
+      console.log("WS onData", data);
+    });
+
+    finnhubWs.removeSymbol("AAPL");
+
+    setTimeout(() => {
+      done();
+    }, 10000);
+  });
 });

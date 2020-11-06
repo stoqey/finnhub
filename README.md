@@ -22,7 +22,7 @@ import FinnhubAPI, { FinnhubWS } from '@stoqey/finnhub';
 const finnhubAPI = new FinnhubAPI(finnHubKey);
 
 // For Websockets
-const finnhubWs = FinnhubWS.Instance;
+const finnhubWs = new FinnhubWS(finnHubKey); // or leave finnHubKey blank if process.env.FINNHUB_KEY is set
 ```
 
 ### Get Candles
@@ -40,13 +40,13 @@ const ticks = await finnhubAPI.getTick(symbol, date);
 const quote = await finnhubAPI.getQuote(symbol);
 ```
 
-### Real-time price updates (W.I.P)
+### Real-time price updates
 ```ts
-finnhubWs.when("onReady", async () => {
+finnhubWs.on("onReady", async () => {
         console.log('WS is ready');
 });
 
-finnhubWs.when("onData", async (data: TickData) => {
+finnhubWs.on("onData", async (data: TickData) => {
         console.log('WS onData', data);
 });
 
