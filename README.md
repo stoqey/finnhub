@@ -59,3 +59,7 @@ finnhubWs.addSymbol("AAPL");
 finnhubWs.removeSymbol("AAPL");
 
 ```
+
+
+## 
+Set `process.env.DEBUG = "finnhub*"` to see all logs
