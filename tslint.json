@@ -43,6 +43,7 @@
       "allow-null-union",
       "allow-undefined-union",
       "ignore-rhs"
-    ]
+    ],
+    "no-this-assignment": false
   }
 }
