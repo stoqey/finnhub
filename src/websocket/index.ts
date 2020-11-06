@@ -1,7 +1,6 @@
-/* tslint:disable */
-import { TickData } from "../interface";
 import WebSocket from "ws";
 import { FINNHUB_KEY, TZ_ON } from "../config";
+import { TickData } from "../interface";
 import { checkIfMarketIsOpen } from "../utils/checkIfMarketIsOpen";
 import { log } from "../utils/log";
 import JSONDATA from "../utils/text.utils";
@@ -98,19 +97,19 @@ export class FinnhubWS {
 
     this.socket = new WebSocket(`wss://ws.finnhub.io?token=${FINNHUB_KEY}`);
 
-    this.socket.on("open", function open(this: any) {
+    this.socket.on("open", async function open(this: any) {
       const onReady = self.events.onReady;
       if (onReady) {
-        onReady();
+        return onReady();
       }
     });
 
-    this.socket.on("error", (error: any) => {
+    this.socket.on("error", async (error: any) => {
       console.log("on error connecting socket", error);
 
       const onError = self.events.error;
       if (onError) {
-        onError(error);
+        return onError(error);
       }
 
       setTimeout(() => self.config(), 2000);
@@ -122,38 +121,39 @@ export class FinnhubWS {
       type: string;
     }
 
-    this.socket.on("message", async function (
-      data: OnSocketData,
-    ): Promise<void> {
-      // @ts-ignore
-      const parsedData: OnSocketData = JSONDATA(data);
+    this.socket.on(
+      "message",
+      async (data: OnSocketData): Promise<void> => {
+        // @ts-ignore
+        const parsedData: OnSocketData = JSONDATA(data);
 
-      if (!parsedData) {
-        return;
-      }
-
-      if (parsedData && parsedData.data && parsedData.data[0]) {
-        const priceItem = parsedData.data[0];
-        const symbol = priceItem.s;
-
-        const dataToSend: TickData = {
-          price: priceItem.p,
-          date: new Date(priceItem.t),
-          symbol: priceItem.s,
-          volume: +priceItem.v,
-        };
-
-        const topicSymbol = symbol;
-
-        log(topicSymbol, dataToSend.price);
-
-        // If we have a publisher then send to it
-        const onData = self.events.onData;
-        if (onData) {
-          await onData(dataToSend);
+        if (!parsedData) {
+          return;
         }
-      }
-    });
+
+        if (parsedData && parsedData.data && parsedData.data[0]) {
+          const priceItem = parsedData.data[0];
+          const symbol = priceItem.s;
+
+          const dataToSend: TickData = {
+            price: priceItem.p,
+            date: new Date(priceItem.t),
+            symbol: priceItem.s,
+            volume: +priceItem.v,
+          };
+
+          const topicSymbol = symbol;
+
+          log(topicSymbol, dataToSend.price);
+
+          // If we have a publisher then send to it
+          const onData = self.events.onData;
+          if (onData) {
+            return onData(dataToSend);
+          }
+        }
+      },
+    );
   }
 
   /**
@@ -168,7 +168,7 @@ export class FinnhubWS {
 
     // If test
     if (symbol === "TEST") {
-      setTimeout(() => {
+      setTimeout(async () => {
         if (onData) {
           const dataToSend: TickData = {
             price: 1000,
@@ -176,7 +176,7 @@ export class FinnhubWS {
             symbol: "STQ",
             volume: 0,
           };
-          onData(dataToSend);
+          return onData(dataToSend);
         }
       }, 2000);
       return true;
@@ -209,7 +209,7 @@ export class FinnhubWS {
    * Removes symbol from subscription list
    * @param symbol
    */
-  public removeSymbol(symbol: String): Boolean {
+  public removeSymbol(symbol: string): boolean {
     try {
       const isExist = this.symbols.findIndex((x) => x === symbol);
       if (isExist) {
