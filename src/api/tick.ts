@@ -35,8 +35,9 @@ export const getTickData = async (args: GetTickData): Promise<TickData[]> => {
 
     const formatedData: TickData[] = jsonData.map((jsD) => {
       return {
+        symbol,
         date: new Date(+jsD.timestamp),
-        price: Math.abs(jsD.price),
+        close: Math.abs(jsD.close),
         volume: Math.abs(jsD.volume),
       };
     });
