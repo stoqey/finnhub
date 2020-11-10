@@ -10,8 +10,19 @@ import JSONDATA from "../utils/text.utils";
  * Finnhub websocket events
  */
 export enum FinnhubWSEvents {
+  /**
+   * { symbol, date, close, volume? }
+   */
   onData = "onData",
+
+  /**
+   * true / false
+   */
   onReady = "onReady",
+
+  /**
+   * new Error()
+   */
   onError = "onError",
 }
 
@@ -107,7 +118,7 @@ export class FinnhubWS extends EventEmitter {
         const symbol = priceItem.s;
 
         const dataToSend: TickData = {
-          price: priceItem.p,
+          close: priceItem.p,
           date: new Date(priceItem.t),
           symbol: priceItem.s,
           volume: +priceItem.v,
@@ -115,7 +126,7 @@ export class FinnhubWS extends EventEmitter {
 
         const topicSymbol = symbol;
 
-        log(topicSymbol, dataToSend.price);
+        log(topicSymbol, dataToSend.close);
 
         self.emit(FinnhubWSEvents.onData, dataToSend);
       }
@@ -136,7 +147,7 @@ export class FinnhubWS extends EventEmitter {
     if (symbol === "TEST") {
       setTimeout(() => {
         const dataToSend: TickData = {
-          price: 1000,
+          close: 1000,
           date: new Date(),
           symbol: "STQ",
           volume: 0,

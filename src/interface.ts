@@ -1,10 +1,10 @@
 export type Resolution = "1" | "5" | "15" | "30" | "60" | "D" | "W" | "M";
 
 export interface TickData {
-  symbol?: string;
+  symbol: string;
   date: Date;
-  price: number;
-  volume: number;
+  close: number;
+  volume?: number;
 }
 
 export interface MarketDataItem {
