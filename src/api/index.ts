@@ -28,11 +28,13 @@ export class FinnhubAPI {
 
   public api: AxiosInstance;
 
-  constructor(token: string) {
+  constructor(token?: string) {
     this.api = axios.create({
       baseURL: "https://finnhub.io/api/v1",
     });
-    this.token = token;
+    this.token = token
+      ? token
+      : (process && process.env && process.env.FINNHUB_KEY) || "";
   }
 
   /**
