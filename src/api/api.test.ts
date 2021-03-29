@@ -55,4 +55,10 @@ describe("FinnhubAPI", () => {
     const quote = await finnhubAPI.getQuote(symbol);
     return expect(quote.close).not.equals(0);
   });
+
+  it("should get Company Profile for symbol = " + symbol, async () => {
+    const companyProfile = await finnhubAPI.getCompanyProfile2(symbol);
+    console.log(companyProfile);
+    return expect(companyProfile.country).not.equal("");
+  });
 });
