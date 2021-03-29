@@ -2,11 +2,13 @@ import axios, { AxiosInstance } from "axios";
 import { isEmpty } from "lodash";
 import {
   Candles,
+  CompanyProfile,
   MarketDataItem,
   Quote,
   Resolution,
   TickData,
 } from "../interface";
+import { getCompanyProfile2Data } from "./fundamentals";
 import { getQuoteData } from "./quote";
 import { getTickData } from "./tick";
 
@@ -22,6 +24,9 @@ const round = (num: number) => Math.round(num);
  *
  * @Quote Get stocks quote price
  * https://finnhub.io/docs/api#quote
+ *
+ * @CompanyProfile2 get symbol Company info
+ * https://finnhub.io/docs/api/company-profile2
  */
 export class FinnhubAPI {
   public token: string;
@@ -123,6 +128,15 @@ export class FinnhubAPI {
    */
   public async getQuote(symbol: string): Promise<Quote> {
     return getQuoteData({ symbol, context: this });
+  }
+
+  /**
+   * GetCompanyProfile
+   * Get general information of a company
+   * https://finnhub.io/docs/api/company-profile2
+   */
+  public async getCompanyProfile2(symbol: string): Promise<CompanyProfile> {
+    return getCompanyProfile2Data({ symbol, context: this });
   }
 }
 
