@@ -6,6 +6,8 @@
 - Tick
 - Quote
 - Real-time price updates
+- Company Profile2
+- Recommendation Trends
 
 ### Install
 ```
@@ -15,7 +17,7 @@ npm i @stoqey/finnhub
 ### Initialize
 Set env variable `FINNHUB_KEY` with the token you get from Finnhub.
 
-or simply assign it from the constructors 
+or simply assign it from the constructors
 
 ```ts
 import FinnhubAPI, { FinnhubWS } from '@stoqey/finnhub';
@@ -42,6 +44,16 @@ const ticks = await finnhubAPI.getTick(symbol, date);
 const quote = await finnhubAPI.getQuote(symbol);
 ```
 
+### Get Company Profile2
+```ts
+const companyProfile = await finnhubAPI.getCompanyProfile2(symbol);
+```
+
+
+### Get Recommendation Trends
+```ts
+const recommendations = await finnhubAPI.GetRecommendationTrends(symbol);
+```
 ### Real-time price updates
 ```ts
 finnhubWs.on("onReady", async () => {
@@ -61,5 +73,5 @@ finnhubWs.removeSymbol("AAPL");
 ```
 
 
-## 
+##
 Set `process.env.DEBUG = "finnhub*"` to see all logs

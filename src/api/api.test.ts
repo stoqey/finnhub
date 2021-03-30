@@ -61,4 +61,10 @@ describe("FinnhubAPI", () => {
     console.log(companyProfile);
     return expect(companyProfile.country).not.equal("");
   });
+
+  it("should get Recommendation Trends for symbol = " + symbol, async () => {
+    const recommendations = await finnhubAPI.GetRecommendationTrends(symbol);
+    console.log(recommendations);
+    return expect(recommendations[0].buy).not.equal(0);
+  });
 });

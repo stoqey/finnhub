@@ -5,13 +5,14 @@ import {
   CompanyProfile,
   MarketDataItem,
   Quote,
+  RecommendationTrends,
   Resolution,
   TickData,
 } from "../interface";
 import { getCompanyProfile2Data } from "./fundamentals";
 import { getQuoteData } from "./quote";
+import { GetRecommendationTrends } from "./stockEstimates";
 import { getTickData } from "./tick";
-
 const round = (num: number) => Math.round(num);
 
 /**
@@ -27,6 +28,9 @@ const round = (num: number) => Math.round(num);
  *
  * @CompanyProfile2 get symbol Company info
  * https://finnhub.io/docs/api/company-profile2
+ *
+ * @RecommendationTrends Get Recommendation Trends
+ * https://finnhub.io/docs/api/recommendation-trends
  */
 export class FinnhubAPI {
   public token: string;
@@ -137,6 +141,17 @@ export class FinnhubAPI {
    */
   public async getCompanyProfile2(symbol: string): Promise<CompanyProfile> {
     return getCompanyProfile2Data({ symbol, context: this });
+  }
+
+  /**
+   * GetRecommendationTrends
+   * Get general information of a company
+   * https://finnhub.io/docs/api/company-profile2
+   */
+  public async GetRecommendationTrends(
+    symbol: string,
+  ): Promise<RecommendationTrends[]> {
+    return GetRecommendationTrends({ symbol, context: this });
   }
 }
 
