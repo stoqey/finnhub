@@ -6,6 +6,7 @@
 - Tick
 - Quote
 - Real-time price updates
+- Peers
 
 ### Install
 ```
@@ -41,6 +42,12 @@ const ticks = await finnhubAPI.getTick(symbol, date);
 ```ts
 const quote = await finnhubAPI.getQuote(symbol);
 ```
+
+### Get Peers
+```ts
+const peers = await finnhubAPI.getPeers(symbol);
+```
+
 
 ### Real-time price updates
 ```ts
