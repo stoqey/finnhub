@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { isEmpty } from "lodash";
+
 import {
   Candles,
   CompanyProfile,
@@ -9,6 +10,7 @@ import {
   TickData,
 } from "../interface";
 import { getCompanyProfile2Data } from "./fundamentals";
+import { getPeers } from "./peers";
 import { getQuoteData } from "./quote";
 import { getTickData } from "./tick";
 
@@ -137,6 +139,10 @@ export class FinnhubAPI {
    */
   public async getCompanyProfile2(symbol: string): Promise<CompanyProfile> {
     return getCompanyProfile2Data({ symbol, context: this });
+  }
+
+  public async getPeers(symbol: string): Promise<string[]> {
+    return getPeers({ symbol, context: this });
   }
 }
 
