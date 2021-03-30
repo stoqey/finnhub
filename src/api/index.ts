@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { isEmpty } from "lodash";
+
 import {
   Candles,
   CompanyProfile,
@@ -9,6 +10,7 @@ import {
   TickData,
 } from "../interface";
 import { getCompanyProfile2Data } from "./fundamentals";
+import { getPeers } from "./peers";
 import { getQuoteData } from "./quote";
 import { getTickData } from "./tick";
 
@@ -25,8 +27,11 @@ const round = (num: number) => Math.round(num);
  * @Quote Get stocks quote price
  * https://finnhub.io/docs/api#quote
  *
- * @CompanyProfile2 get symbol Company info
+ * @CompanyProfile2 Get symbol Company info
  * https://finnhub.io/docs/api/company-profile2
+ *
+ * @Peers Get peers for company
+ * https://finnhub.io/docs/api/company-peers
  */
 export class FinnhubAPI {
   public token: string;
@@ -137,6 +142,15 @@ export class FinnhubAPI {
    */
   public async getCompanyProfile2(symbol: string): Promise<CompanyProfile> {
     return getCompanyProfile2Data({ symbol, context: this });
+  }
+
+  /**
+   * GetPeers
+   * Get company peers. Return a list of peers in the same country and GICS sub-industry
+   * @param symbol
+   */
+  public async getPeers(symbol: string): Promise<string[]> {
+    return getPeers({ symbol, context: this });
   }
 }
 

@@ -1,8 +1,10 @@
 import "mocha";
-import { expect } from "chai";
-import FinnhubAPI from ".";
 
+import { expect } from "chai";
 import dotenv from "dotenv";
+
+import FinnhubAPI from "./";
+
 dotenv.config();
 
 const finnHubKey = (process && process.env.FINNHUB_KEY) || "";
@@ -60,5 +62,11 @@ describe("FinnhubAPI", () => {
     const companyProfile = await finnhubAPI.getCompanyProfile2(symbol);
     console.log(companyProfile);
     return expect(companyProfile.country).not.equal("");
+  });
+
+  it("should get Company peers =" + symbol, async () => {
+    const peers = await finnhubAPI.getPeers(symbol);
+    console.log("peers", peers);
+    return expect(peers.length).greaterThan(0);
   });
 });
