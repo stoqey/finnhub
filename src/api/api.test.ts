@@ -1,8 +1,10 @@
 import "mocha";
-import { expect } from "chai";
-import FinnhubAPI from ".";
 
+import { expect } from "chai";
 import dotenv from "dotenv";
+
+import FinnhubAPI from "./";
+
 dotenv.config();
 
 const finnHubKey = (process && process.env.FINNHUB_KEY) || "";
@@ -62,9 +64,15 @@ describe("FinnhubAPI", () => {
     return expect(companyProfile.country).not.equal("");
   });
 
+
   it("should get Recommendation Trends for symbol = " + symbol, async () => {
     const recommendations = await finnhubAPI.GetRecommendationTrends(symbol);
     console.log(recommendations);
     return expect(recommendations[0].buy).not.equal(0);
+
+  it("should get Company peers =" + symbol, async () => {
+    const peers = await finnhubAPI.getPeers(symbol);
+    console.log("peers", peers);
+    return expect(peers.length).greaterThan(0);
   });
 });

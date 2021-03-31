@@ -8,6 +8,7 @@
 - Real-time price updates
 - Company Profile2
 - Recommendation Trends
+- Peers
 
 ### Install
 ```
@@ -49,11 +50,17 @@ const quote = await finnhubAPI.getQuote(symbol);
 const companyProfile = await finnhubAPI.getCompanyProfile2(symbol);
 ```
 
-
 ### Get Recommendation Trends
 ```ts
 const recommendations = await finnhubAPI.GetRecommendationTrends(symbol);
 ```
+
+### Get Peers
+```ts
+const peers = await finnhubAPI.getPeers(symbol);
+```
+
+
 ### Real-time price updates
 ```ts
 finnhubWs.on("onReady", async () => {
