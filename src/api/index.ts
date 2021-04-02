@@ -6,14 +6,15 @@ import {
   CompanyProfile,
   MarketDataItem,
   Quote,
+  RecommendationTrends,
   Resolution,
   TickData,
 } from "../interface";
 import { getCompanyProfile2Data } from "./fundamentals";
 import { getPeers } from "./peers";
 import { getQuoteData } from "./quote";
+import { GetRecommendationTrends } from "./stockEstimates";
 import { getTickData } from "./tick";
-
 const round = (num: number) => Math.round(num);
 
 /**
@@ -30,6 +31,8 @@ const round = (num: number) => Math.round(num);
  * @CompanyProfile2 Get symbol Company info
  * https://finnhub.io/docs/api/company-profile2
  *
+ * @RecommendationTrends Get Recommendation Trends
+ * https://finnhub.io/docs/api/recommendation-trends
  * @Peers Get peers for company
  * https://finnhub.io/docs/api/company-peers
  */
@@ -145,6 +148,14 @@ export class FinnhubAPI {
   }
 
   /**
+   * GetRecommendationTrends
+   * Get general information of a company
+   * https://finnhub.io/docs/api/company-profile2
+   */
+  public async GetRecommendationTrends(
+    symbol: string,
+  ): Promise<RecommendationTrends[]> {
+    return GetRecommendationTrends({ symbol, context: this });
    * GetPeers
    * Get company peers. Return a list of peers in the same country and GICS sub-industry
    * @param symbol

@@ -59,3 +59,13 @@ export interface CompanyProfile {
   logo: string;
   finnhubIndustry: string;
 }
+
+export interface RecommendationTrends {
+  symbol: string;
+  buy: number;
+  hold: number;
+  period: Date;
+  sell: number;
+  strongBuy: number;
+  strongSell: number;
+}
