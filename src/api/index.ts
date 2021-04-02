@@ -156,6 +156,9 @@ export class FinnhubAPI {
     symbol: string,
   ): Promise<RecommendationTrends[]> {
     return GetRecommendationTrends({ symbol, context: this });
+  }
+
+  /**
    * GetPeers
    * Get company peers. Return a list of peers in the same country and GICS sub-industry
    * @param symbol
