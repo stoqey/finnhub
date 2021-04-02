@@ -88,7 +88,7 @@
     "typescript": ">=2.0"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "csvtojson": "^2.0.10",
     "debug": "^4.2.0",
     "lodash": "^4.17.20",
