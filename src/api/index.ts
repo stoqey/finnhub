@@ -3,14 +3,14 @@ import { isEmpty } from "lodash";
 
 import {
   Candles,
-  CompanyProfile,
   MarketDataItem,
   Quote,
   RecommendationTrends,
   Resolution,
   TickData,
 } from "../interface";
-import { getCompanyProfile2Data } from "./fundamentals";
+import Fundamentals from "./fundamentals/fundamentals";
+import { CompanyProfile, SymbolLookup } from "./fundamentals/interface";
 import { getPeers } from "./peers";
 import { getQuoteData } from "./quote";
 import { GetRecommendationTrends } from "./stockEstimates";
@@ -41,6 +41,8 @@ export class FinnhubAPI {
 
   public api: AxiosInstance;
 
+  private fundamentalsApi: Fundamentals;
+
   constructor(token?: string) {
     this.api = axios.create({
       baseURL: "https://finnhub.io/api/v1",
@@ -48,6 +50,8 @@ export class FinnhubAPI {
     this.token = token
       ? token
       : (process && process.env && process.env.FINNHUB_KEY) || "";
+
+    this.fundamentalsApi = new Fundamentals(this);
   }
 
   /**
@@ -139,12 +143,26 @@ export class FinnhubAPI {
   }
 
   /**
+   * Symbol Lookup
+   * Search for best-matching symbols based on your query. You can input anything from symbol, security's name to ISIN and Cusip.
+   * @param query Query text can be symbol, name, isin, or cusip
+   * @returns SymbolLookup
+   */
+  public async symbolLookup(query?: string): Promise<SymbolLookup> {
+    return this.fundamentalsApi.symbolLookup(query);
+  }
+
+  /**
    * GetCompanyProfile
    * Get general information of a company
    * https://finnhub.io/docs/api/company-profile2
    */
-  public async getCompanyProfile2(symbol: string): Promise<CompanyProfile> {
-    return getCompanyProfile2Data({ symbol, context: this });
+  public async getCompanyProfile2(
+    symbol?: string,
+    isin?: string,
+    cusip?: string,
+  ): Promise<CompanyProfile> {
+    return this.fundamentalsApi.getCompanyProfile2(symbol, isin, cusip);
   }
 
   /**

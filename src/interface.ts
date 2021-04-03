@@ -44,21 +44,6 @@ export interface Quote {
   prevClose: number; // Previous close price
   date: Date; // time
 }
-export interface CompanyProfile {
-  symbol: string;
-  country: string;
-  currency: string;
-  exchange: string;
-  ipo: Date;
-  marketCapitalization: number;
-  name: string;
-  phone: string;
-  shareOutstanding: number;
-  ticker: string;
-  weburl: string;
-  logo: string;
-  finnhubIndustry: string;
-}
 
 export interface RecommendationTrends {
   symbol: string;
