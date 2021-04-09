@@ -113,8 +113,8 @@ describe("Symbol lookup", () => {
 });
 
 describe("Company Profile2", () => {
-  it("should get Company Profile for symbol = " + symbol, async () => {
-    const companyProfile = await finnhubAPI.getCompanyProfile2(symbol);
-    return expect(companyProfile.country).not.equal("");
+  it("Should get Company Profile for symbol = " + symbol, async () => {
+    const companyProfile = await finnhubAPI.companyProfile2({ symbol });
+    expect(companyProfile.country).not.equal("");
   });
 });

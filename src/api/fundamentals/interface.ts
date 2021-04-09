@@ -10,7 +10,13 @@ export interface SymbolLookup {
   result: SymbolData[];
 }
 
-export interface CompanyProfile {
+export interface CompanyProfile2Request {
+  symbol?: string;
+  isin?: string;
+  cusip?: string;
+}
+
+export interface CompanyProfile2 {
   country: string;
   currency: string;
   exchange: string;

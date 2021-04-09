@@ -1,5 +1,9 @@
 import FinnhubAPI from "../";
-import { CompanyProfile, SymbolLookup } from "./interface";
+import {
+  CompanyProfile2,
+  CompanyProfile2Request,
+  SymbolLookup,
+} from "./interface";
 
 class Fundamentals {
   public ctx: FinnhubAPI;
@@ -41,23 +45,17 @@ class Fundamentals {
   /**
    * Company Profile 2
    * Get general information of a company. You can query by symbol, ISIN or CUSIP. This is the free version of Company Profile.
-   * @param symbol Symbol of the company: AAPL e.g.
-   * @param isin
-   * @param cusip
-   * @returns
+   * @param args @type {CompanyProfile2Request}
+   * @returns {CompanyProfile2}
    */
-  public getCompanyProfile2 = async (
-    symbol?: string,
-    isin?: string,
-    cusip?: string,
-  ): Promise<CompanyProfile> => {
+  public companyProfile2 = async (
+    args: CompanyProfile2Request,
+  ): Promise<CompanyProfile2> => {
     const token = this.ctx.token;
 
     // https://finnhub.io/api/v1/stock/profile2?symbol=AAPL&token=
     const params = {
-      symbol,
-      isin,
-      cusip,
+      args,
       token,
     };
 
@@ -67,7 +65,7 @@ class Fundamentals {
         params,
       });
 
-      const profileData: CompanyProfile = profile.data;
+      const profileData: CompanyProfile2 = profile.data;
 
       return profileData;
     } catch (error) {

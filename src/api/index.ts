@@ -10,7 +10,11 @@ import {
   TickData,
 } from "../interface";
 import Fundamentals from "./fundamentals/fundamentals";
-import { CompanyProfile, SymbolLookup } from "./fundamentals/interface";
+import {
+  CompanyProfile2,
+  CompanyProfile2Request,
+  SymbolLookup,
+} from "./fundamentals/interface";
 import { getPeers } from "./peers";
 import { getQuoteData } from "./quote";
 import { GetRecommendationTrends } from "./stockEstimates";
@@ -153,16 +157,16 @@ export class FinnhubAPI {
   }
 
   /**
-   * GetCompanyProfile
+   * companyProfile2
    * Get general information of a company
    * https://finnhub.io/docs/api/company-profile2
+   * @param args @type {CompanyProfile2Request}
+   * @return {CompanyProfile2}
    */
-  public async getCompanyProfile2(
-    symbol?: string,
-    isin?: string,
-    cusip?: string,
-  ): Promise<CompanyProfile> {
-    return this.fundamentalsApi.getCompanyProfile2(symbol, isin, cusip);
+  public async companyProfile2(
+    args: CompanyProfile2Request,
+  ): Promise<CompanyProfile2> {
+    return this.fundamentalsApi.companyProfile2(args);
   }
 
   /**
