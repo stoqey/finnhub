@@ -118,3 +118,10 @@ describe("Company Profile2", () => {
     expect(companyProfile.country).not.equal("");
   });
 });
+
+describe("Market News", () => {
+  it("Should return market news only for forex category", async () => {
+    const res = await finnhubAPI.marketNews({ category: "forex" });
+    res.every((news) => expect(news).to.have.property("category", "forex"));
+  });
+});

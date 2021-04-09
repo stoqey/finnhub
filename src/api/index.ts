@@ -13,6 +13,8 @@ import Fundamentals from "./fundamentals/fundamentals";
 import {
   CompanyProfile2,
   CompanyProfile2Request,
+  MarketNews,
+  MarketNewsRequest,
   SymbolLookup,
 } from "./fundamentals/interface";
 import { getPeers } from "./peers";
@@ -167,6 +169,10 @@ export class FinnhubAPI {
     args: CompanyProfile2Request,
   ): Promise<CompanyProfile2> {
     return this.fundamentalsApi.companyProfile2(args);
+  }
+
+  public async marketNews(args: MarketNewsRequest): Promise<MarketNews[]> {
+    return this.fundamentalsApi.marketNews(args);
   }
 
   /**

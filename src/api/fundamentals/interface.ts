@@ -30,3 +30,22 @@ export interface CompanyProfile2 {
   logo: string;
   finnhubIndustry: string;
 }
+
+export type MarketCategory = "general" | "forex" | "crypto" | "merger";
+
+export interface MarketNewsRequest {
+  category: MarketCategory;
+  minId?: number;
+}
+
+export interface MarketNews {
+  category: string;
+  datetime: Date;
+  headline: string;
+  id: number;
+  image: string;
+  related: string;
+  source: string;
+  summary: string;
+  url: string;
+}
