@@ -11,6 +11,8 @@ import {
 } from "../interface";
 import Fundamentals from "./fundamentals/fundamentals";
 import {
+  CompanyNews,
+  CompanyNewsRequest,
   CompanyProfile2,
   CompanyProfile2Request,
   MarketNews,
@@ -171,8 +173,24 @@ export class FinnhubAPI {
     return this.fundamentalsApi.companyProfile2(args);
   }
 
+  /**
+   * Market News - https://finnhub.io/docs/api/market-news
+   * Get latest market news.
+   * @param args @type {MarketNewsRequest}
+   * @returns {MarketNews}
+   */
   public async marketNews(args: MarketNewsRequest): Promise<MarketNews[]> {
     return this.fundamentalsApi.marketNews(args);
+  }
+
+  /**
+   * Company News - https://finnhub.io/docs/api/company-news
+   * List latest company news by symbol. This endpoint is only available for North American companies.
+   * @param args @type {CompanyNewsRequest}
+   * @returns {CompanyNews}
+   */
+  public async companyNews(args: CompanyNewsRequest): Promise<CompanyNews[]> {
+    return this.fundamentalsApi.companyNews(args);
   }
 
   /**

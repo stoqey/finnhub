@@ -1,7 +1,10 @@
 import { expect } from "chai";
 import dotenv from "dotenv";
 import "mocha";
-import { SymbolLookup } from "../../src/api/fundamentals/interface";
+import {
+  CompanyNewsRequest,
+  SymbolLookup,
+} from "../../src/api/fundamentals/interface";
 import FinnhubAPI from "../../src/index";
 
 dotenv.config();
@@ -123,5 +126,18 @@ describe("Market News", () => {
   it("Should return market news only for forex category", async () => {
     const res = await finnhubAPI.marketNews({ category: "forex" });
     res.every((news) => expect(news).to.have.property("category", "forex"));
+  });
+});
+
+describe("Company News", () => {
+  it("Should return Apple news only for 1st April", async () => {
+    const req: CompanyNewsRequest = {
+      symbol: "AAPL",
+      from: new Date("2021-04-01"),
+      to: new Date("2021-04-01"),
+    };
+    const res = await finnhubAPI.companyNews(req);
+
+    res.every((news) => expect(news).to.have.property("related", "AAPL"));
   });
 });

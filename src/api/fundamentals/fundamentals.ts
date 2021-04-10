@@ -1,5 +1,7 @@
 import FinnhubAPI from "../";
 import {
+  CompanyNews,
+  CompanyNewsRequest,
   CompanyProfile2,
   CompanyProfile2Request,
   MarketNews,
@@ -108,7 +110,6 @@ class Fundamentals {
       minId: args.minId,
       token,
     };
-    console.log(params);
 
     try {
       const marketNewsRes = await this.ctx.api.get(`news`, {
@@ -118,6 +119,39 @@ class Fundamentals {
 
       const marketNews: MarketNews[] = marketNewsRes.data;
       return marketNews;
+    } catch (error) {
+      console.log("error getting market news", error && error.message);
+      return [];
+    }
+  };
+
+  /**
+   * Company News - https://finnhub.io/docs/api/company-news
+   * List latest company news by symbol. This endpoint is only available for North American companies.
+   * @param args @type {CompanyNewsRequest}
+   * @returns {CompanyNews}
+   */
+  public companyNews = async (
+    args: CompanyNewsRequest,
+  ): Promise<CompanyNews[]> => {
+    const token = this.ctx.token;
+
+    // https://finnhub.io/api/v1/company-news?symbol=AAPL&from=2021-03-01&to=2021-03-09&token=
+    const params = {
+      symbol: args.symbol,
+      from: args.from.toISOString().split("T")[0],
+      to: args.to.toISOString().split("T")[0],
+      token,
+    };
+
+    try {
+      const companyNewsRes = await this.ctx.api.get(`company-news`, {
+        method: "GET",
+        params,
+      });
+
+      const companyNews: CompanyNews[] = companyNewsRes.data;
+      return companyNews;
     } catch (error) {
       console.log("error getting market news", error && error.message);
       return [];

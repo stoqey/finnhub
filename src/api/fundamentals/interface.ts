@@ -49,3 +49,11 @@ export interface MarketNews {
   summary: string;
   url: string;
 }
+
+export interface CompanyNewsRequest {
+  symbol: string;
+  from: Date;
+  to: Date;
+}
+
+export interface CompanyNews extends MarketNews {}
