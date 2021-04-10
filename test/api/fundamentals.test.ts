@@ -99,45 +99,59 @@ describe("Symbol lookup", () => {
     const res = await finnhubAPI.symbolLookup("google");
 
     // TODO: Find a better way to compare these objects
-    expect(res.count).equal(expectedRes.count);
+    expect(res?.count).equal(expectedRes.count);
   });
 
   it("Query for nothing and expect a very big object of size 7218", async () => {
     const expectedSize = 7218;
     const res = await finnhubAPI.symbolLookup();
-    expect(res.count).equal(expectedSize);
+    expect(res?.count).equal(expectedSize);
   });
 
   it("Query for empty string and expect a very big object of size 7218", async () => {
     const expectedSize = 7218;
     const res = await finnhubAPI.symbolLookup("");
-    expect(res.count).equal(expectedSize);
+    expect(res?.count).equal(expectedSize);
   });
 });
 
 describe("Company Profile2", () => {
   it("Should get Company Profile for symbol = " + symbol, async () => {
     const companyProfile = await finnhubAPI.companyProfile2({ symbol });
-    expect(companyProfile.country).not.equal("");
+    expect(companyProfile?.country).not.equal("");
   });
 });
 
 describe("Market News", () => {
   it("Should return market news only for forex category", async () => {
     const res = await finnhubAPI.marketNews({ category: "forex" });
-    res.every((news) => expect(news).to.have.property("category", "forex"));
+    res?.every((news) => expect(news).to.have.property("category", "forex"));
   });
 });
 
 describe("Company News", () => {
-  it("Should return Apple news only for 1st April", async () => {
+  it("Should return news only for 1st April for " + symbol, async () => {
     const req: CompanyNewsRequest = {
-      symbol: "AAPL",
+      symbol,
       from: new Date("2021-04-01"),
       to: new Date("2021-04-01"),
     };
     const res = await finnhubAPI.companyNews(req);
 
-    res.every((news) => expect(news).to.have.property("related", "AAPL"));
+    res?.every((news) => expect(news).to.have.property("related", symbol));
+  });
+});
+
+describe("News Sentiment", () => {
+  it("Should return news only for " + symbol, async () => {
+    const res = await finnhubAPI.newsSentiment(symbol);
+    expect(res).to.have.property("symbol", symbol);
+  });
+});
+
+describe("Peers", () => {
+  it("should get Company peers " + symbol, async () => {
+    const peers = await finnhubAPI.peers(symbol);
+    expect(peers?.length).greaterThan(0);
   });
 });

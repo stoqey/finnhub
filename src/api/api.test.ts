@@ -63,10 +63,4 @@ describe("FinnhubAPI", () => {
     console.log(recommendations);
     return expect(recommendations[0].buy).not.equal(0);
   });
-
-  it("should get Company peers =" + symbol, async () => {
-    const peers = await finnhubAPI.getPeers(symbol);
-    console.log("peers", peers);
-    return expect(peers.length).greaterThan(0);
-  });
 });

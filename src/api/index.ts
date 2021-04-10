@@ -17,9 +17,9 @@ import {
   CompanyProfile2Request,
   MarketNews,
   MarketNewsRequest,
+  NewsSentiment,
   SymbolLookup,
 } from "./fundamentals/interface";
-import { getPeers } from "./peers";
 import { getQuoteData } from "./quote";
 import { GetRecommendationTrends } from "./stockEstimates";
 import { getTickData } from "./tick";
@@ -154,9 +154,9 @@ export class FinnhubAPI {
    * Symbol Lookup
    * Search for best-matching symbols based on your query. You can input anything from symbol, security's name to ISIN and Cusip.
    * @param query Query text can be symbol, name, isin, or cusip
-   * @returns SymbolLookup
+   * @returns {SymbolLookup | null}
    */
-  public async symbolLookup(query?: string): Promise<SymbolLookup> {
+  public async symbolLookup(query?: string): Promise<SymbolLookup | null> {
     return this.fundamentalsApi.symbolLookup(query);
   }
 
@@ -165,11 +165,11 @@ export class FinnhubAPI {
    * Get general information of a company
    * https://finnhub.io/docs/api/company-profile2
    * @param args @type {CompanyProfile2Request}
-   * @return {CompanyProfile2}
+   * @return {CompanyProfile2 | null}
    */
   public async companyProfile2(
     args: CompanyProfile2Request,
-  ): Promise<CompanyProfile2> {
+  ): Promise<CompanyProfile2 | null> {
     return this.fundamentalsApi.companyProfile2(args);
   }
 
@@ -177,9 +177,11 @@ export class FinnhubAPI {
    * Market News - https://finnhub.io/docs/api/market-news
    * Get latest market news.
    * @param args @type {MarketNewsRequest}
-   * @returns {MarketNews}
+   * @returns {MarketNews | null}
    */
-  public async marketNews(args: MarketNewsRequest): Promise<MarketNews[]> {
+  public async marketNews(
+    args: MarketNewsRequest,
+  ): Promise<MarketNews[] | null> {
     return this.fundamentalsApi.marketNews(args);
   }
 
@@ -187,10 +189,22 @@ export class FinnhubAPI {
    * Company News - https://finnhub.io/docs/api/company-news
    * List latest company news by symbol. This endpoint is only available for North American companies.
    * @param args @type {CompanyNewsRequest}
-   * @returns {CompanyNews}
+   * @returns {CompanyNews | null}
    */
-  public async companyNews(args: CompanyNewsRequest): Promise<CompanyNews[]> {
+  public async companyNews(
+    args: CompanyNewsRequest,
+  ): Promise<CompanyNews[] | null> {
     return this.fundamentalsApi.companyNews(args);
+  }
+
+  /**
+   * News Sentiment - https://finnhub.io/docs/api/news-sentiment
+   * Get company's news sentiment and statistics. This endpoint is only available for US companies.
+   * @param symbol
+   * @returns {NewsSentiment | null}
+   */
+  public async newsSentiment(symbol: string): Promise<NewsSentiment | null> {
+    return this.fundamentalsApi.newsSentiment(symbol);
   }
 
   /**
@@ -205,12 +219,13 @@ export class FinnhubAPI {
   }
 
   /**
-   * GetPeers
+   * Peers - https://finnhub.io/docs/api/company-peers
    * Get company peers. Return a list of peers in the same country and GICS sub-industry
-   * @param symbol
+   * @param symbol Symbol of the company
+   * @returns Array of peers' symbol.
    */
-  public async getPeers(symbol: string): Promise<string[]> {
-    return getPeers({ symbol, context: this });
+  public async peers(symbol: string): Promise<string[] | null> {
+    return this.fundamentalsApi.peers(symbol);
   }
 }
 

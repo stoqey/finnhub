@@ -6,6 +6,7 @@ import {
   CompanyProfile2Request,
   MarketNews,
   MarketNewsRequest,
+  NewsSentiment,
   SymbolLookup,
 } from "./interface";
 
@@ -20,9 +21,11 @@ class Fundamentals {
    * Symbol Lookup - https://finnhub.io/docs/api/symbol-search
    * Search for best-matching symbols based on your query. You can input anything from symbol, security's name to ISIN and Cusip.
    * @param query Query text can be symbol, name, isin, or cusip.
-   * @returns {SymbolLookup}
+   * @returns {SymbolLookup | null}
    */
-  public symbolLookup = async (query?: string): Promise<SymbolLookup> => {
+  public symbolLookup = async (
+    query?: string,
+  ): Promise<SymbolLookup | null> => {
     const token = this.ctx.token;
     const params = {
       q: query,
@@ -39,10 +42,7 @@ class Fundamentals {
       return symbolLookup;
     } catch (error) {
       console.log("error symbol lookup", error && error.message);
-      return {
-        count: 0,
-        result: [],
-      };
+      return null;
     }
   };
 
@@ -50,11 +50,11 @@ class Fundamentals {
    * Company Profile 2 - https://finnhub.io/docs/api/company-profile2
    * Get general information of a company. You can query by symbol, ISIN or CUSIP. This is the free version of Company Profile.
    * @param args @type {CompanyProfile2Request}
-   * @returns {CompanyProfile2}
+   * @returns {CompanyProfile2 | null}
    */
   public companyProfile2 = async (
     args: CompanyProfile2Request,
-  ): Promise<CompanyProfile2> => {
+  ): Promise<CompanyProfile2 | null> => {
     const token = this.ctx.token;
 
     // https://finnhub.io/api/v1/stock/profile2?symbol=AAPL&token=
@@ -76,20 +76,7 @@ class Fundamentals {
       return profileData;
     } catch (error) {
       console.log("error getting company profile", error && error.message);
-      return {
-        country: "",
-        currency: "",
-        exchange: "",
-        ipo: new Date(),
-        marketCapitalization: 0,
-        name: "",
-        phone: "",
-        shareOutstanding: 0,
-        ticker: "",
-        weburl: "",
-        logo: "",
-        finnhubIndustry: "",
-      };
+      return null;
     }
   };
 
@@ -97,11 +84,11 @@ class Fundamentals {
    * Market News - https://finnhub.io/docs/api/market-news
    * Get latest market news.
    * @param args @type {MarketNewsRequest}
-   * @returns {MarketNews}
+   * @returns {MarketNews | null}
    */
   public marketNews = async (
     args: MarketNewsRequest,
-  ): Promise<MarketNews[]> => {
+  ): Promise<MarketNews[] | null> => {
     const token = this.ctx.token;
 
     // https://finnhub.io/api/v1/news?category=general&token=
@@ -121,7 +108,7 @@ class Fundamentals {
       return marketNews;
     } catch (error) {
       console.log("error getting market news", error && error.message);
-      return [];
+      return null;
     }
   };
 
@@ -129,11 +116,11 @@ class Fundamentals {
    * Company News - https://finnhub.io/docs/api/company-news
    * List latest company news by symbol. This endpoint is only available for North American companies.
    * @param args @type {CompanyNewsRequest}
-   * @returns {CompanyNews}
+   * @returns {CompanyNews | null}
    */
   public companyNews = async (
     args: CompanyNewsRequest,
-  ): Promise<CompanyNews[]> => {
+  ): Promise<CompanyNews[] | null> => {
     const token = this.ctx.token;
 
     // https://finnhub.io/api/v1/company-news?symbol=AAPL&from=2021-03-01&to=2021-03-09&token=
@@ -154,7 +141,68 @@ class Fundamentals {
       return companyNews;
     } catch (error) {
       console.log("error getting market news", error && error.message);
-      return [];
+      return null;
+    }
+  };
+
+  /**
+   * News Sentiment - https://finnhub.io/docs/api/news-sentiment
+   * Get company's news sentiment and statistics. This endpoint is only available for US companies.
+   * @param symbol
+   * @returns {NewsSentiment | null}
+   */
+  public newsSentiment = async (
+    symbol: string,
+  ): Promise<NewsSentiment | null> => {
+    const token = this.ctx.token;
+
+    // https://finnhub.io/api/v1/news-sentiment?symbol=V&token=
+    const params = {
+      symbol,
+      token,
+    };
+
+    try {
+      const newsSentimentRes = await this.ctx.api.get("news-sentiment", {
+        method: "GET",
+        params,
+      });
+
+      const newsSentiment = newsSentimentRes.data;
+      return newsSentiment;
+    } catch (error) {
+      console.log("error getting news sentiment", error && error.message);
+      return null;
+    }
+  };
+
+  /**
+   * Peers - https://finnhub.io/docs/api/company-peers
+   * Get company peers. Return a list of peers in the same country and GICS sub-industry
+   * @param symbol Symbol of the company
+   * @returns Array of peers' symbol.
+   */
+  public peers = async (symbol: string): Promise<string[] | null> => {
+    const token = this.ctx.token;
+
+    // https://finnhub.io/api/v1/stock/peers?symbol=AAPL&token=
+    const params = {
+      symbol,
+      token,
+    };
+
+    try {
+      const peers: string[] = (
+        await this.ctx.api.get(`stock/peers`, {
+          method: "GET",
+          params,
+        })
+      ).data;
+
+      return peers;
+    } catch (error) {
+      console.log("error getting quote", error && error.message);
+      return null;
     }
   };
 }

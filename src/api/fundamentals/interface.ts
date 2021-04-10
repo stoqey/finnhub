@@ -57,3 +57,23 @@ export interface CompanyNewsRequest {
 }
 
 export interface CompanyNews extends MarketNews {}
+
+export interface Buzz {
+  articlesInLastWeek: number;
+  buzz: number;
+  weeklyAverage: number;
+}
+
+export interface Sentiment {
+  bearishPercent: number;
+  bullishPercent: number;
+}
+
+export interface NewsSentiment {
+  buzz: Buzz;
+  companyNewsScore: number;
+  sectorAverageBullishPercent: number;
+  sectorAverageNewsScore: number;
+  sentiment: Sentiment;
+  symbol: string;
+}
