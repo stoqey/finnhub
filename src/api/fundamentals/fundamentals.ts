@@ -1,5 +1,7 @@
 import FinnhubAPI from "../";
 import {
+  BasicFinancials,
+  BasicFinancialsRequest,
   CompanyNews,
   CompanyNewsRequest,
   CompanyProfile2,
@@ -201,7 +203,37 @@ class Fundamentals {
 
       return peers;
     } catch (error) {
-      console.log("error getting quote", error && error.message);
+      console.log("error getting peers", error && error.message);
+      return null;
+    }
+  };
+
+  /**
+   * Basic Financials - https://finnhub.io/docs/api/company-basic-financials
+   * Get company basic financials such as margin, P/E ratio, 52-week high/low etc.
+   * @param args @type {BasicFinancialsRequest}
+   * @returns {BasicFinancials}
+   */
+  public basicFinancials = async (
+    args: BasicFinancialsRequest,
+  ): Promise<BasicFinancials | null> => {
+    const token = this.ctx.token;
+
+    const params = {
+      symbol: args.symbol,
+      metric: args.metric,
+      token,
+    };
+
+    try {
+      const basicFinancialsRes = await this.ctx.api.get("stock/metric", {
+        method: "GET",
+        params,
+      });
+
+      return basicFinancialsRes.data;
+    } catch (error) {
+      console.log("error getting basicFinancials", error && error.message);
       return null;
     }
   };

@@ -77,3 +77,22 @@ export interface NewsSentiment {
   sentiment: Sentiment;
   symbol: string;
 }
+
+export type MetricType = "all";
+
+export interface BasicFinancialsRequest {
+  symbol: string;
+  metric: MetricType;
+}
+
+export interface TimeRatios {
+  period: Date;
+  v: number;
+}
+
+export interface BasicFinancials {
+  symbol: string;
+  metricType: string;
+  series: Map<string, TimeRatios[]>;
+  metric: Map<string, number>;
+}

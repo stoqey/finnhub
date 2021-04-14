@@ -11,6 +11,8 @@ import {
 } from "../interface";
 import Fundamentals from "./fundamentals/fundamentals";
 import {
+  BasicFinancials,
+  BasicFinancialsRequest,
   CompanyNews,
   CompanyNewsRequest,
   CompanyProfile2,
@@ -226,6 +228,18 @@ export class FinnhubAPI {
    */
   public async peers(symbol: string): Promise<string[] | null> {
     return this.fundamentalsApi.peers(symbol);
+  }
+
+  /**
+   * Basic Financials - https://finnhub.io/docs/api/company-basic-financials
+   * Get company basic financials such as margin, P/E ratio, 52-week high/low etc.
+   * @param args @type {BasicFinancialsRequest}
+   * @returns {BasicFinancials}
+   */
+  public async basicFinancials(
+    args: BasicFinancialsRequest,
+  ): Promise<BasicFinancials | null> {
+    return this.fundamentalsApi.basicFinancials(args);
   }
 }
 

@@ -155,3 +155,13 @@ describe("Peers", () => {
     expect(peers?.length).greaterThan(0);
   });
 });
+
+describe("Basic Financials", () => {
+  it("should get Basic Financials for " + symbol, async () => {
+    const basicFinancialsRes = await finnhubAPI.basicFinancials({
+      symbol,
+      metric: "all",
+    });
+    expect(basicFinancialsRes?.symbol).to.be.equal(symbol);
+  });
+});
