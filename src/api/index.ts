@@ -17,6 +17,8 @@ import {
   CompanyNewsRequest,
   CompanyProfile2,
   CompanyProfile2Request,
+  InsiderTransaction,
+  InsiderTransactionRequest,
   MarketNews,
   MarketNewsRequest,
   NewsSentiment,
@@ -221,6 +223,16 @@ export class FinnhubAPI {
   }
 
   /**
+   * @deprecated - please use peers API
+   * GetPeers
+   * Get company peers. Return a list of peers in the same country and GICS sub-industry
+   * @param symbol
+   */
+  public async getPeers(symbol: string): Promise<string[] | null> {
+    return this.peers(symbol);
+  }
+
+  /**
    * Peers - https://finnhub.io/docs/api/company-peers
    * Get company peers. Return a list of peers in the same country and GICS sub-industry
    * @param symbol Symbol of the company
@@ -240,6 +252,19 @@ export class FinnhubAPI {
     args: BasicFinancialsRequest,
   ): Promise<BasicFinancials | null> {
     return this.fundamentalsApi.basicFinancials(args);
+  }
+
+  /**
+   * Insider Transactions - https://finnhub.io/docs/api/insider-transactions
+   * Company insider transactions data sourced from Form 3,4,5. This endpoint only covers US companies at the moment.
+   * Limit to 100 transactions per API call.
+   * @param args @type {InsiderTransactionRequest}
+   * @returns {InsiderTransaction}
+   */
+  public async insiderTransactions(
+    args: InsiderTransactionRequest,
+  ): Promise<InsiderTransaction | null> {
+    return this.fundamentalsApi.insiderTransactions(args);
   }
 }
 

@@ -1,4 +1,4 @@
-interface SymbolData {
+export interface SymbolData {
   description: string;
   displaySymbol: string;
   symbol: string;
@@ -95,4 +95,25 @@ export interface BasicFinancials {
   metricType: string;
   series: Map<string, TimeRatios[]>;
   metric: Map<string, number>;
+}
+
+export interface InsiderTransactionRequest {
+  symbol: string;
+  from?: Date;
+  to?: Date;
+}
+
+export interface InsiderTransactionData {
+  name: string;
+  share: number;
+  change: number;
+  filingDate: Date;
+  transactionDate: Date;
+  transactionPrice: number;
+  transactionCode: string;
+}
+
+export interface InsiderTransaction {
+  symbol: string;
+  data: InsiderTransactionData[];
 }

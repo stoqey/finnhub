@@ -165,3 +165,12 @@ describe("Basic Financials", () => {
     expect(basicFinancialsRes?.symbol).to.be.equal(symbol);
   });
 });
+
+describe("Insider Financials", () => {
+  it(`should get Insider Financials for ${symbol}`, async () => {
+    const insiderTransactionRes = await finnhubAPI.insiderTransactions({
+      symbol,
+    });
+    expect(insiderTransactionRes?.symbol).to.be.equal(symbol);
+  });
+});

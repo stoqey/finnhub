@@ -6,6 +6,8 @@ import {
   CompanyNewsRequest,
   CompanyProfile2,
   CompanyProfile2Request,
+  InsiderTransaction,
+  InsiderTransactionRequest,
   MarketNews,
   MarketNewsRequest,
   NewsSentiment,
@@ -233,7 +235,42 @@ class Fundamentals {
 
       return basicFinancialsRes.data;
     } catch (error) {
-      console.log("error getting basicFinancials", error && error.message);
+      console.log("error getting basic financials", error && error.message);
+      return null;
+    }
+  };
+
+  /**
+   * Insider Transactions - https://finnhub.io/docs/api/insider-transactions
+   * Company insider transactions data sourced from Form 3,4,5. This endpoint only covers US companies at the moment.
+   * Limit to 100 transactions per API call.
+   * @param args @type {InsiderTransactionRequest}
+   * @returns {InsiderTransaction}
+   */
+  public insiderTransactions = async (
+    args: InsiderTransactionRequest,
+  ): Promise<InsiderTransaction | null> => {
+    const token = this.ctx.token;
+
+    const params = {
+      symbol: args.symbol,
+      from: args.from,
+      to: args.to,
+      token,
+    };
+
+    try {
+      const insiderTransactionRes = await this.ctx.api.get(
+        "stock/insider-transactions",
+        {
+          method: "GET",
+          params,
+        },
+      );
+
+      return insiderTransactionRes.data;
+    } catch (error) {
+      console.log("error getting insider transactions", error && error.message);
       return null;
     }
   };
