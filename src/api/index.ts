@@ -3,15 +3,27 @@ import { isEmpty } from "lodash";
 
 import {
   Candles,
-  CompanyProfile,
   MarketDataItem,
   Quote,
   RecommendationTrends,
   Resolution,
   TickData,
 } from "../interface";
-import { getCompanyProfile2Data } from "./fundamentals";
-import { getPeers } from "./peers";
+import Fundamentals from "./fundamentals/fundamentals";
+import {
+  BasicFinancials,
+  BasicFinancialsRequest,
+  CompanyNews,
+  CompanyNewsRequest,
+  CompanyProfile2,
+  CompanyProfile2Request,
+  InsiderTransaction,
+  InsiderTransactionRequest,
+  MarketNews,
+  MarketNewsRequest,
+  NewsSentiment,
+  SymbolLookup,
+} from "./fundamentals/interface";
 import { getQuoteData } from "./quote";
 import { GetRecommendationTrends } from "./stockEstimates";
 import { getTickData } from "./tick";
@@ -41,6 +53,8 @@ export class FinnhubAPI {
 
   public api: AxiosInstance;
 
+  private fundamentalsApi: Fundamentals;
+
   constructor(token?: string) {
     this.api = axios.create({
       baseURL: "https://finnhub.io/api/v1",
@@ -48,6 +62,8 @@ export class FinnhubAPI {
     this.token = token
       ? token
       : (process && process.env && process.env.FINNHUB_KEY) || "";
+
+    this.fundamentalsApi = new Fundamentals(this);
   }
 
   /**
@@ -139,12 +155,60 @@ export class FinnhubAPI {
   }
 
   /**
-   * GetCompanyProfile
+   * Symbol Lookup
+   * Search for best-matching symbols based on your query. You can input anything from symbol, security's name to ISIN and Cusip.
+   * @param query Query text can be symbol, name, isin, or cusip
+   * @returns {SymbolLookup | null}
+   */
+  public async symbolLookup(query?: string): Promise<SymbolLookup | null> {
+    return this.fundamentalsApi.symbolLookup(query);
+  }
+
+  /**
+   * companyProfile2
    * Get general information of a company
    * https://finnhub.io/docs/api/company-profile2
+   * @param args @type {CompanyProfile2Request}
+   * @return {CompanyProfile2 | null}
    */
-  public async getCompanyProfile2(symbol: string): Promise<CompanyProfile> {
-    return getCompanyProfile2Data({ symbol, context: this });
+  public async companyProfile2(
+    args: CompanyProfile2Request,
+  ): Promise<CompanyProfile2 | null> {
+    return this.fundamentalsApi.companyProfile2(args);
+  }
+
+  /**
+   * Market News - https://finnhub.io/docs/api/market-news
+   * Get latest market news.
+   * @param args @type {MarketNewsRequest}
+   * @returns {MarketNews | null}
+   */
+  public async marketNews(
+    args: MarketNewsRequest,
+  ): Promise<MarketNews[] | null> {
+    return this.fundamentalsApi.marketNews(args);
+  }
+
+  /**
+   * Company News - https://finnhub.io/docs/api/company-news
+   * List latest company news by symbol. This endpoint is only available for North American companies.
+   * @param args @type {CompanyNewsRequest}
+   * @returns {CompanyNews | null}
+   */
+  public async companyNews(
+    args: CompanyNewsRequest,
+  ): Promise<CompanyNews[] | null> {
+    return this.fundamentalsApi.companyNews(args);
+  }
+
+  /**
+   * News Sentiment - https://finnhub.io/docs/api/news-sentiment
+   * Get company's news sentiment and statistics. This endpoint is only available for US companies.
+   * @param symbol
+   * @returns {NewsSentiment | null}
+   */
+  public async newsSentiment(symbol: string): Promise<NewsSentiment | null> {
+    return this.fundamentalsApi.newsSentiment(symbol);
   }
 
   /**
@@ -159,12 +223,48 @@ export class FinnhubAPI {
   }
 
   /**
+   * @deprecated - please use peers API
    * GetPeers
    * Get company peers. Return a list of peers in the same country and GICS sub-industry
    * @param symbol
    */
-  public async getPeers(symbol: string): Promise<string[]> {
-    return getPeers({ symbol, context: this });
+  public async getPeers(symbol: string): Promise<string[] | null> {
+    return this.peers(symbol);
+  }
+
+  /**
+   * Peers - https://finnhub.io/docs/api/company-peers
+   * Get company peers. Return a list of peers in the same country and GICS sub-industry
+   * @param symbol Symbol of the company
+   * @returns Array of peers' symbol.
+   */
+  public async peers(symbol: string): Promise<string[] | null> {
+    return this.fundamentalsApi.peers(symbol);
+  }
+
+  /**
+   * Basic Financials - https://finnhub.io/docs/api/company-basic-financials
+   * Get company basic financials such as margin, P/E ratio, 52-week high/low etc.
+   * @param args @type {BasicFinancialsRequest}
+   * @returns {BasicFinancials}
+   */
+  public async basicFinancials(
+    args: BasicFinancialsRequest,
+  ): Promise<BasicFinancials | null> {
+    return this.fundamentalsApi.basicFinancials(args);
+  }
+
+  /**
+   * Insider Transactions - https://finnhub.io/docs/api/insider-transactions
+   * Company insider transactions data sourced from Form 3,4,5. This endpoint only covers US companies at the moment.
+   * Limit to 100 transactions per API call.
+   * @param args @type {InsiderTransactionRequest}
+   * @returns {InsiderTransaction}
+   */
+  public async insiderTransactions(
+    args: InsiderTransactionRequest,
+  ): Promise<InsiderTransaction | null> {
+    return this.fundamentalsApi.insiderTransactions(args);
   }
 }
 

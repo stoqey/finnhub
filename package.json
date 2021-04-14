@@ -17,7 +17,7 @@
     "build": "rimraf dist && tsc",
     "test-ws": "mocha src/websocket/*test.ts -R spec --require ts-node/register --exit --timeout 30000",
     "test-spec": "mocha src/**/*test.ts -R spec --require ts-node/register --exit --timeout 30000",
-    "test-api": "mocha src/api/*test.ts --config mocharc.json",
+    "test-api": "mocha test/api/*test.ts  --config mocharc.json",
     "test": "npm run test-spec",
     "prepublishOnly": "npm run build"
   },

@@ -58,21 +58,9 @@ describe("FinnhubAPI", () => {
     return expect(quote.close).not.equals(0);
   });
 
-  it("should get Company Profile for symbol = " + symbol, async () => {
-    const companyProfile = await finnhubAPI.getCompanyProfile2(symbol);
-    console.log(companyProfile);
-    return expect(companyProfile.country).not.equal("");
-  });
-
   it("should get Recommendation Trends for symbol = " + symbol, async () => {
     const recommendations = await finnhubAPI.GetRecommendationTrends(symbol);
     console.log(recommendations);
     return expect(recommendations[0].buy).not.equal(0);
-  });
-
-  it("should get Company peers =" + symbol, async () => {
-    const peers = await finnhubAPI.getPeers(symbol);
-    console.log("peers", peers);
-    return expect(peers.length).greaterThan(0);
   });
 });
