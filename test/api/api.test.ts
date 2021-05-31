@@ -1,9 +1,11 @@
+/*eslint-disable no-unused-expressions */
+
 import "mocha";
 
 import { expect } from "chai";
 import dotenv from "dotenv";
 
-import FinnhubAPI from "./";
+import FinnhubAPI from "../../src/api";
 
 dotenv.config();
 

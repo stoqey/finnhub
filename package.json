@@ -21,11 +21,6 @@
     "test": "npm run test-spec",
     "prepublishOnly": "npm run build"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "prettier": {
     "trailingComma": "all"
   },
