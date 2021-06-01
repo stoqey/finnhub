@@ -15,8 +15,5 @@
     "types": ["node", "mocha"],
     "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*",
-    "test/**/*"
-  ]
+  "include": ["src/**/*", "src/test/**/*"]
 }

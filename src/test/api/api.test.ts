@@ -5,7 +5,7 @@ import "mocha";
 import { expect } from "chai";
 import dotenv from "dotenv";
 
-import FinnhubAPI from "../../src/api";
+import FinnhubAPI from "../../api";
 
 dotenv.config();
 
