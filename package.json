@@ -18,8 +18,8 @@
     "test-ws": "mocha src/websocket/*test.ts -R spec --require ts-node/register --exit --timeout 30000",
     "test-spec": "mocha src/**/*test.ts -R spec --require ts-node/register --exit --timeout 30000",
     "test-api": "mocha src/test/api/*test.ts  --config mocharc.json",
-    "test": "npm run test-spec",
-    "prepublishOnly": "npm run build"
+    "test": "yarn test-spec",
+    "prepublishOnly": "yarn build"
   },
   "prettier": {
     "trailingComma": "all"

@@ -73,7 +73,7 @@ jobs:
       - run:
           name: Run eslint
           command: |
-            npm run lint
+            yarn lint
           when: always
 
       - store_test_results:
@@ -101,7 +101,7 @@ jobs:
       - run:
           name: Run unit tests with Mocha as reporter
           command: |
-            npm test
+            yarn test
           when: always
 
       #- run:
