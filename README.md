@@ -13,6 +13,10 @@
 ### Install
 ```
 npm i @stoqey/finnhub
+
+or
+
+yarn add @stoqey/finnhub
 ```
 
 ### Initialize
