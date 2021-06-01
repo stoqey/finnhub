@@ -84,6 +84,8 @@ jobs:
 
   test_unit_parallel:
     # we'll increase the value when we'll vahe more tests
+    docker:
+      - image: circleci/node:12.18.4
     parallelism: 1
     environment:
       # CC_TEST_REPORTER_ID: <token>
