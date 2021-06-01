@@ -86,6 +86,7 @@
     "axios": "^0.21.1",
     "csvtojson": "^2.0.10",
     "debug": "^4.2.0",
+    "eslint": "^7.27.0",
     "lodash": "^4.17.20",
     "moment": "^2.25.1",
     "moment-business-time": "^1.0.0",
