@@ -1,11 +1,10 @@
+import "mocha";
+
 import { expect } from "chai";
 import dotenv from "dotenv";
-import "mocha";
-import {
-  CompanyNewsRequest,
-  SymbolLookup,
-} from "../../src/api/fundamentals/interface";
-import FinnhubAPI from "../../src/index";
+
+import { CompanyNewsRequest, SymbolLookup } from "../../api/fundamentals/interface";
+import FinnhubAPI from "../../index";
 
 dotenv.config();
 const finnHubKey = (process && process.env.FINNHUB_KEY) || "";
