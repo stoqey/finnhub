@@ -1,5 +1,7 @@
 # Finnhub - NodeJS Wrapper
 
+<img alt="NPM" src="https://circleci.com/gh/stoqey/finnhub.svg?style=svg"></img>
+
 #### Features
 
 - Candles
